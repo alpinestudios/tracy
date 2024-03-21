@@ -3,6 +3,11 @@
 //
 #if ENABLED {
 	#load "c_bindings.jai";
+	
+	// randy: added this for one-shot events
+	Marker :: (msg : string, color: u32 = 0xFFFFFF, value: u64 = 0) #expand #no_debug {
+		___tracy_emit_messageC(msg.data, msg.count, color, 0);
+	}
 
 	// Call this every frame.
 	FrameMark :: () #expand #no_debug {
@@ -44,6 +49,7 @@
         Compiler.set_build_options_dc(.{append_linker_arguments=TRACY_DEPENDENCY_LIBS});
     }
 } else {
+	Marker :: (msg : string, color: u32 = 0, value: u64 = 0) #expand #no_debug {}
 	FrameMark :: () #expand #no_debug {}
 	ZoneScoped :: ($name := "", text := "", color: u32 = 0, value: u64 = 0, location := #caller_location) #expand #no_debug {}
 }
