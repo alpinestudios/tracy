@@ -1,4 +1,7 @@
-
+.build/
+*.dSYM
+*.lib
+*.dll
 *.exe
 *.pdb
 *.obj
